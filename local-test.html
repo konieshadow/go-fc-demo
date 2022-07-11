@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+</head>
+<body>
+<script>
+    const baseUrl = "https://http-go-fc-demo-ywbckbpkfv.cn-hangzhou.fcapp.run";
+
+    function request(data) {
+        fetch(baseUrl, {
+            method: "POST",
+            headers: {
+                "my1": data,
+                "Content-Type": "text/plain"
+            },
+            body: data
+        }).then(res => {
+            return res.text()
+        }).then(text => {
+            if (text !== data) {
+                console.error("请求与响应不匹配", data, text);
+            } else {
+                console.log("请求成功");
+            }
+        });
+    }
+
+    function randomText(length) {
+        let str = '';
+        for (let i = 0; i < length; i++) {
+            const num = Math.floor(Math.random() * 10);
+            str += num;
+        }
+        return str;
+    }
+
+    for (let i = 0; i < 100; i++) {
+        const length = Math.floor(Math.random() * 10);
+        const data = randomText(length);
+        request(data);
+    }
+</script>
+</body>
+</html>
